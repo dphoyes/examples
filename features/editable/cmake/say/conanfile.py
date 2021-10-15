@@ -22,12 +22,19 @@ class SayConan(ConanFile):
     # Sources are located in the same place as this recipe, copy them to the recipe
     exports_sources = "CMakeLists.txt", "src/*"
 
+    # Just an arbitrary example - I might want to add other generators here
+    # over time. I'd prefer not to have to update .gitignore for each item
+    # added here.
+    generators = "txt", "json"
+
     def config_options(self):
         if self.settings.os == "Windows":
             del self.options.fPIC
 
     def layout(self):
         cmake_layout(self)
+        # This prints *** self.folders.generators = cmake-build-release/conan ***
+        print(f"*** self.folders.generators = {self.folders.generators} ***")
 
     def generate(self):
         tc = CMakeToolchain(self)
